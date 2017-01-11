@@ -25,28 +25,18 @@
         var hub = null;
 
         window.onerror = function (msg, url, lineNo, columnNo, error) {
-            var string = msg.toLowerCase();
-            var substring = "script error";
-            if (string.indexOf(substring) > -1) {
-                alert('Script Error: See Browser Console for Detail');
-            }
-            else {
-                var message = [
-                    'Message: ' + msg,
-                    'URL: ' + url,
-                    'Line: ' + lineNo,
-                    'Column: ' + columnNo,
-                    'Error object: ' + JSON.stringify(error)
-                ].join(' - ');
-
-                alert(message);
-            }
-
+            var message = [
+                'Message: ' + msg,
+                'URL: ' + url,
+                'Line: ' + lineNo,
+                'Column: ' + columnNo,
+                'Error object: ' + JSON.stringify(error)
+            ].join(' - ');
+            alert(message);
             return false;
         };
 
         try {
-
             document.addEventListener("DOMContentLoaded", docLoaded, false);
             function docLoaded() {
                 document.addEventListener("deviceready", onDeviceReady, false);
@@ -59,80 +49,80 @@
 
                     hub = $.connection.mingleradiusHub
                     var ready = !!hub;
-                    console.log("hub ready - " + ready);
+                    alert("hub ready - " + ready);
                     console.log("hub - " + hub);
 
-                    //$(function () {
+                    $(function () {
 
-                    //    var retryCount = 0;
+                        var retryCount = 0;
 
-                    //    var hub = $.connection.mingleradiusHub; //set hub with the server side class
+                        var hub = $.connection.mingleradiusHub; //set hub with the server side class
 
-                    //    console.log("Log hub - " + hub);
-                    //    hub.client.usersConnected = function (numUsers, userlist) {
-                    //        $("#count").text(numUsers);
+                        console.log("Log hub - " + hub);
+                        hub.client.usersConnected = function (numUsers, userlist) {
+                            $("#count").text(numUsers);
 
-                    //        var objUserlist = JSON.parse(userlist);
-                    //        var usersHtml = "";
+                            var objUserlist = JSON.parse(userlist);
+                            var usersHtml = "";
 
-                    //        for (var i = 0; i < objUserlist.length; i++) {
-                    //            usersHtml += "<div class='user'><img class='profilePic' src='" + objUserlist[i].pictureURL + "' /><div>Name: " + objUserlist[i].fullName + "</div>/div>";
-                    //        }
-                    //        $("#ContentText").html(usersHtml);
-                    //    };
+                            for (var i = 0; i < objUserlist.length; i++) {
+                                usersHtml += "<div class='user'><img class='profilePic' src='" + objUserlist[i].pictureURL + "' /><div>Name: " + objUserlist[i].fullName + "</div>/div>";
+                            }
+                            $("#ContentText").html(usersHtml);
+                        };
 
-                    //    $.connection.hub.error(function (error) {
-                    //        $("#hubSatus").text('SignalR error: ' + error);
-                    //    });
+                        $.connection.hub.error(function (error) {
+                            $("#hubSatus").text('SignalR error: ' + error);
+                        });
 
-                    //    $.connection.hub.logging = true;
-                    //    $.connection.hub.start().done(function () {
-                    //        $("#hubSatus").text("SignalR connected done");
-                    //        var json = JSON.stringify({ "id": "9999999999", "link": "https://www.facebook.com/app_scoped_user_id/10207470834186901/", "picture": { "data": { "is_silhouette": false, "url": "images/AnonymousUser.jpg" } }, "verified": true, "locale": "en_US", "updated_time": "2015-06-06T02:03:26+0000", "first_name": "Web", "age_range": { "min": 21 }, "timezone": 3, "last_name": "User", "name": "Web User", "gender": "unspecified", "lat": "32.2448704", "long": "34.843884765" });
-                    //        hub.server.addSelftoUsers(json);
-                    //        var tempLat = String(32.2448704);
-                    //        var tempLong = String(34.843884765);
-                    //        hub.server.updateUserLocation(tempLat, tempLong);
-                    //    });
+                        $.connection.hub.logging = true;
+                        $.connection.hub.start().done(function () {
+                            $("#hubSatus").text("SignalR connected done");
+                            var json = JSON.stringify({ "id": "9999999999", "link": "https://www.facebook.com/app_scoped_user_id/10207470834186901/", "picture": { "data": { "is_silhouette": false, "url": "images/AnonymousUser.jpg" } }, "verified": true, "locale": "en_US", "updated_time": "2015-06-06T02:03:26+0000", "first_name": "Web", "age_range": { "min": 21 }, "timezone": 3, "last_name": "User", "name": "Web User", "gender": "unspecified", "lat": "32.2448704", "long": "34.843884765" });
+                            hub.server.addSelftoUsers(json);
+                            var tempLat = String(32.2448704);
+                            var tempLong = String(34.843884765);
+                            hub.server.updateUserLocation(tempLat, tempLong);
+                        });
 
-                    //    $.connection.hub.connectionSlow(function () {
-                    //        $("#hubSatus").text("SignalR connection Slow...");
-                    //    });
+                        $.connection.hub.connectionSlow(function () {
+                            $("#hubSatus").text("SignalR connection Slow...");
+                        });
 
-                    //    var tryingToReconnect = false;
+                        var tryingToReconnect = false;
 
-                    //    $.connection.hub.reconnecting(function () {
-                    //        tryingToReconnect = true;
-                    //        $("#hubSatus").text("SignalR reconnecting...");
-                    //    });
+                        $.connection.hub.reconnecting(function () {
+                            tryingToReconnect = true;
+                            $("#hubSatus").text("SignalR reconnecting...");
+                        });
 
-                    //    $.connection.hub.reconnected(function () {
-                    //        tryingToReconnect = false;
-                    //        $("#hubSatus").text("SignalR reconnected");
-                    //        hub.server.sendToAllUsers();
-                    //    });
+                        $.connection.hub.reconnected(function () {
+                            tryingToReconnect = false;
+                            $("#hubSatus").text("SignalR reconnected");
+                            hub.server.sendToAllUsers();
+                        });
 
-                    //    $.connection.hub.disconnected(function () {
-                    //        if (tryingToReconnect) { // occurs only after a reconnecting timeout, not after calling Stop
-                    //            $("#hubSatus").text("SignalR reconnect failed");
+                        $.connection.hub.disconnected(function () {
+                            if (tryingToReconnect) { // occurs only after a reconnecting timeout, not after calling Stop
+                                $("#hubSatus").text("SignalR reconnect failed");
 
-                    //            setTimeout(function () {
-                    //                $("#hubSatus").text("SignalR retry connect, retry " + (++retryCount));
-                    //                if (retryCount < 5) {
-                    //                    $.connection.hub.start().done(function () {
-                    //                        $("#hubSatus").text("SignalR connected done");
-                    //                        hub.server.addSelftoUsers(jsonFacebookInfo);
-                    //                    });
-                    //                }
-                    //                else {
-                    //                    $("#hubSatus").text("SignalR retry connect failed after " + retryCount + " attempts");
-                    //                    retryCount = 0;
-                    //                }
-                    //            }, 5000); // Restart connection after 5 seconds.
-                    //        }
-                    //    });
+                                setTimeout(function () {
+                                    $("#hubSatus").text("SignalR retry connect, retry " + (++retryCount));
+                                    if (retryCount < 5) {
+                                        $.connection.hub.start().done(function () {
+                                            $("#hubSatus").text("SignalR connected done");
+                                            hub.server.addSelftoUsers(jsonFacebookInfo);
+                                        });
+                                    }
+                                    else {
+                                        $("#hubSatus").text("SignalR retry connect failed after " + retryCount + " attempts");
+                                        retryCount = 0;
+                                    }
+                                }, 5000); // Restart connection after 5 seconds.
+                            }
+                        });
 
-                    //});
+                    });
                 }
             }
         }
