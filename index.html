@@ -19,6 +19,8 @@
     <script src="js/libs/jquery.signalR-2.2.0.min.js"></script>
     <script src="http://mingleradius.com/signalr/hubs"></script>
 
+    <script src="cordova.js"></script>
+
     <script type="text/javascript">
         var hub = null;
 
@@ -27,7 +29,8 @@
             var substring = "script error";
             if (string.indexOf(substring) > -1) {
                 alert('Script Error: See Browser Console for Detail');
-            } else {
+            }
+            else {
                 var message = [
                     'Message: ' + msg,
                     'URL: ' + url,
@@ -48,10 +51,6 @@
             function docLoaded() {
 
                 $.connection.hub.url = "http://mingleradius.com/signalr";
-
-                //alert("$.connection - " + $.connection);
-                //alert("$.connection.hub.url - " + $.connection.hub.url);
-                //alert("stringify($.connection) - " + JSON.stringify($.connection));
 
                 var ready = !(!($.connection.mingleradiusHub));
                 alert("ready - " + ready);
