@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8" />
@@ -52,10 +52,14 @@
                 document.addEventListener("deviceready", onDeviceReady, false);
                 function onDeviceReady() {
 
+                    console.log("$.connection - " + $.connection);
+                    console.log("$.connection.hub - " + $.connection.hub);
+
                     $.connection.hub.url = "http://mingleradius.com/signalr";
 
                     var ready = !(!($.connection.mingleradiusHub));
-                    alert("ready - " + ready);
+                    console.log("ready - " + ready);
+                    console.log("$.connection.mingleradiusHub - " + $.connection.mingleradiusHub);
 
                     $(function () {
 
@@ -63,7 +67,7 @@
 
                         var hub = $.connection.mingleradiusHub; //set hub with the server side class
 
-                        console.log(hub);
+                        console.log("Log hub - " + hub);
                         hub.client.usersConnected = function (numUsers, userlist) {
                             $("#count").text(numUsers);
 
