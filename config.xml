@@ -13,21 +13,5 @@
   <preference name="phonegap-version" value="cli-5.2.0" />
   <preference name="android-minSdkVersion" value="15" />
   <preference name="android-build-tool" value="gradle" />
-
-  <plugin name="cordova-plugin-statusbar" source="npm" />
-  <preference name="StatusBarOverlaysWebView" value="false" />
-  <preference name="StatusBarBackgroundColor" value="#425F9C" />
-  <preference name="StatusBarStyle" value="lightcontent" />
-
-  <plugin name="cordova-plugin-geolocation" />
-
-  <plugin name="cordova-plugin-facebook4" spec="1.7.1">
-      <param name="APP_ID" value="267391923615424" />
-      <param name="APP_NAME" value="JimmysApp" />
-  </plugin> <!-- </gap:plugin> -->
-
-  <plugin name="cordova-plugin-inappbrowser" />
-
-  <plugin  name="cordova.plugins.AdjustUINative" spec="https://github.com/webtalk16/CordovaPluginAdjustUINative.git" />
   
 </widget>
