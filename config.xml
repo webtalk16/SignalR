@@ -14,79 +14,19 @@
   <preference name="android-minSdkVersion" value="15" />
   <preference name="android-build-tool" value="gradle" />
 
-  <!--<preference name="ios-statusbarstyle" value="gray" />-->
-  <!--<preference name="StatusBarOverlaysWebView" value="true"/>
-  <preference name="StatusBarBackgroundColor" value="#000000"/>
-  <preference name="StatusBarStyle" value="lightcontent" />
-  <preference name="orientation" value="potrait" />-->
   <plugin name="cordova-plugin-statusbar" source="npm" />
   <preference name="StatusBarOverlaysWebView" value="false" />
   <preference name="StatusBarBackgroundColor" value="#425F9C" />
   <preference name="StatusBarStyle" value="lightcontent" />
 
-  <!--<preference name="DisallowOverscroll" value="true" />-->
-
-  <icon src="icon.png" />
-  <icon src="icons/ios/JimmyAppIcon.png" platform="ios" width="57" height="57" />
-  <icon src="icons/ios/JimmyAppIcon-72.png" platform="ios" width="72" height="72" />
-  <icon src="icons/ios/JimmyAppIcon-57-2x.png" platform="ios" width="114" height="114" />
-  <icon src="icons/ios/JimmyAppIcon-72-2x.png" platform="ios" width="144" height="144" />
-
-  <splash src="icons/ios/splashScreens/screen-default.png" />
-  <splash src="icons/ios/splashScreens/screen-iphone-portrait.png" platform="ios" width="320" height="480" />
-  <splash src="icons/ios/splashScreens/screen-iphone-portrait-2x.png" platform="ios" width="640" height="960" />
-  <splash src="icons/ios/splashScreens/screen-iphone-portrait-568h-2x.png" platform="ios" width="640" height="1136" />
-  <splash src="icons/ios/splashScreens/screen-iphone-portrait-6.png" platform="ios" width="375" height="627" />
-  <splash src="icons/ios/splashScreens/screen-iphone-portrait-6Plus.png" platform="ios" width="414" height="736" />
-  <splash src="icons/ios/splashScreens/screen-ipad-portrait.png" platform="ios" width="768" height="1024" />
-  <splash src="icons/ios/splashScreens/screen-ipad-landscape.png" platform="ios" width="1024" height="768" />
-
-  <icon src="icons/ios/JimmyAppIcon.png" platform="android" qualifier="ldpi" />
-  <icon src="icons/ios/JimmyAppIcon.png" platform="android" qualifier="mdpi" />
-  <icon src="icons/ios/JimmyAppIcon.png" platform="android" qualifier="hdpi" />
-  <icon src="icons/ios/JimmyAppIcon.png" platform="android" qualifier="xhdpi" />
-  <icon src="icons/ios/JimmyAppIcon.png" platform="android" qualifier="xxhdpi" />
-  <icon src="icons/ios/JimmyAppIcon.png" platform="android" qualifier="fr-xxhdpi" />
-
-  <splash src="icons/ios/splashScreens/screen-default.png" platform="android" qualifier="ldpi" />
-  <splash src="icons/ios/splashScreens/screen-default.png" platform="android" qualifier="mdpi" />
-  <splash src="icons/ios/splashScreens/screen-default.png" platform="android" qualifier="hdpi" />
-  <splash src="icons/ios/splashScreens/screen-default.png" platform="android" qualifier="xhdpi" />
-  <splash src="icons/ios/splashScreens/screen-default.png" platform="android" qualifier="fr-xhdpi" />
-  <splash src="icons/ios/splashScreens/screen-default.png" platform="android" qualifier="port-xxhdpi" />
-  <splash src="icons/ios/splashScreens/screen-default.png" platform="android" qualifier="land-xxhdpi" />
-
   <plugin name="cordova-plugin-geolocation" />
-  <!-- <plugin name="cordova-plugin-geolocation" source="pgb" />-->
-  <!--<plugin name="org.apache.cordova.geolocation" source="pgb"/>--><!-- for older versions of Cordova-->
-  <!--<plugin name="org.apache.cordova.geolocation" source="pgb" />-->
-  <!--<plugin name="org.apache.cordova.geolocation" spec="0.3.12" source="pgb" />-->
-  <!--<gap:plugin name="org.apache.cordova.geolocation" />-->
-  <!-- <plugin name="org.transistorsoft.cordova.background-geolocation" />-->
 
-
-  <!--<plugin name="onesignal-cordova-plugin-pgb-compat" source="npm" />
-  <plugin name="com.google.playservices" source="npm" />-->
-
-  <!-- <plugin name="com.phonegap.plugins.facebookconnect" source="pgb" spec="0.9.0"> -->
   <plugin name="cordova-plugin-facebook4" spec="1.7.1">
       <param name="APP_ID" value="267391923615424" />
       <param name="APP_NAME" value="JimmysApp" />
   </plugin> <!-- </gap:plugin> -->
-  <!--'com.facebook.android:facebook-android-sdk:4.8.0'-->
 
   <plugin name="cordova-plugin-inappbrowser" />
-  <!--<plugin name="org.apache.cordova.inappbrowser" source="npm" />-->
-  <!--<gap:plugin name="cordova-plugin-inappbrowser" source="npm" />-->
-
-  <!--<access origin="*"/>-->
-
-  
-  <!-- test custom pluggin -->
-  <!--<feature name="Echo">
-    <param name="ios-package" value="Echo" />
-    <param name="onload" value="true" />
-  </feature>-->
 
   <plugin  name="cordova.plugins.AdjustUINative" spec="https://github.com/webtalk16/CordovaPluginAdjustUINative.git" />
   
