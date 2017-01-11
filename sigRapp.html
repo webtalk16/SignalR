@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>sigRapp</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body style="overflow:hidden;">
+    <h2>sigRapp</h2>
+
+    <div id="errorDiv" style="color: red; padding: 10px;"></div>
+
+    <p id="hubSatus">listing for hub status change...</p>
+    <div style="color:red;font-size:50px" id="count">0</div>
+    <div style="color:red" id="ContentText"></div>
+
+    <script src="js/libs/jquery-1.6.4.min.js"></script>
+    <script src="js/libs/jquery.signalR-2.2.0.min.js"></script>
+    <script src="http://mingleradius.com/signalr/hubs"></script>
+
+    <script type="text/javascript">
+        var hub = null;
+
+        window.onerror = function (msg, url, lineNo, columnNo, error) {
+            var string = msg.toLowerCase();
+            var substring = "script error";
+            if (string.indexOf(substring) > -1) {
+                alert('Script Error: See Browser Console for Detail');
+            } else {
+                var message = [
+                    'Message: ' + msg,
+                    'URL: ' + url,
+                    'Line: ' + lineNo,
+                    'Column: ' + columnNo,
+                    'Error object: ' + JSON.stringify(error)
+                ].join(' - ');
+
+                alert(message);
+            }
+
+            return false;
+        };
+
+        try {
+
+            document.addEventListener("DOMContentLoaded", docLoaded, false);
+            function docLoaded() {
+
+                $.connection.hub.url = "http://mingleradius.com/signalr";
+
+                //alert("$.connection - " + $.connection);
+                //alert("$.connection.hub.url - " + $.connection.hub.url);
+                //alert("stringify($.connection) - " + JSON.stringify($.connection));
+
+                var ready = !(!($.connection.mingleradiusHub));
+                alert("ready - " + ready);
+
+                $(function () {
+
+                    var retryCount = 0;
+
+                    var hub = $.connection.mingleradiusHub; //set hub with the server side class
+
+                    console.log(hub);
+                    hub.client.usersConnected = function (numUsers, userlist) {
+                        $("#count").text(numUsers);
+
+                        var objUserlist = JSON.parse(userlist);
+                        var usersHtml = "";
+
+
+
+                        for (var i = 0; i < objUserlist.length; i++) {
+
+                            var distanceFromMe = (objUserlist[i].lat == "" || objUserlist[i].long == "") ? "<img src='images/ajax-loader.gif' width='16' height='16' />" : (getDistanceFromLatLonInKm(parseFloat(objUserlist[i].lat, 10), parseFloat(objUserlist[i].long, 10)) * 1000) + " Meters";
+                            usersHtml += "<div class='user'><img class='profilePic' src='" + objUserlist[i].pictureURL + "' /><div>Name: " + objUserlist[i].fullName + "</div><div>Gender: " + objUserlist[i].gender + "</div><div>Distance: " + distanceFromMe + "</div></div>";
+                        }
+                        $("#ContentText").html(usersHtml);
+                    };
+
+                    $.connection.hub.error(function (error) {
+                        $("#hubSatus").text('SignalR error: ' + error);
+                    });
+
+                    $.connection.hub.logging = true;
+                    $.connection.hub.start().done(function () {
+                        $("#hubSatus").text("SignalR connected done");
+                        var json = JSON.stringify({ "id": "9999999999", "link": "https://www.facebook.com/app_scoped_user_id/10207470834186901/", "picture": { "data": { "is_silhouette": false, "url": "images/AnonymousUser.jpg" } }, "verified": true, "locale": "en_US", "updated_time": "2015-06-06T02:03:26+0000", "first_name": "Web", "age_range": { "min": 21 }, "timezone": 3, "last_name": "User", "name": "Web User", "gender": "unspecified", "lat": "32.2448704", "long": "34.843884765" });
+                        hub.server.addSelftoUsers(json);
+                        var tempLat = String(32.2448704);
+                        var tempLong = String(34.843884765);
+                        hub.server.updateUserLocation(tempLat, tempLong);
+                    });
+
+                    $.connection.hub.connectionSlow(function () {
+                        $("#hubSatus").text("SignalR connection Slow...");
+                    });
+
+                    var tryingToReconnect = false;
+
+                    $.connection.hub.reconnecting(function () {
+                        tryingToReconnect = true;
+                        $("#hubSatus").text("SignalR reconnecting...");
+                    });
+
+                    $.connection.hub.reconnected(function () {
+                        tryingToReconnect = false;
+                        $("#hubSatus").text("SignalR reconnected");
+                        hub.server.sendToAllUsers();
+                    });
+
+                    $.connection.hub.disconnected(function () {
+                        if (tryingToReconnect) { // occurs only after a reconnecting timeout, not after calling Stop
+                            $("#hubSatus").text("SignalR reconnect failed");
+
+                            setTimeout(function () {
+                                $("#hubSatus").text("SignalR retry connect, retry " + (++retryCount));
+                                if (retryCount < 5) {
+                                    $.connection.hub.start().done(function () {
+                                        $("#hubSatus").text("SignalR connected done");
+                                        hub.server.addSelftoUsers(jsonFacebookInfo);
+                                    });
+                                }
+                                else {
+                                    $("#hubSatus").text("SignalR retry connect failed after " + retryCount + " attempts");
+                                    retryCount = 0;
+                                }
+                            }, 5000); // Restart connection after 5 seconds.
+                        }
+                    });
+
+                });
+
+                function getDistanceFromLatLonInKm(lat1, lon1) {
+
+                    var lat2 = 32.2448704;
+                    var lon2 = 34.843884765;
+
+                    var R = 6371; // Radius of the earth in km
+                    var dLat = deg2rad(lat2 - lat1);  // deg2rad below
+                    var dLon = deg2rad(lon2 - lon1);
+                    var a =
+                      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                      Math.sin(dLon / 2) * Math.sin(dLon / 2)
+                    ;
+                    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                    var d = R * c; // Distance in km
+
+                    if (lat1 == lat2 && lon1 == lon2) {
+                        console.log("lat1 == lat2 && lon1 == lon2");
+                        //return 0;
+                    }
+
+                    return Math.ceil(d);
+                }
+
+                function deg2rad(deg) {
+                    return deg * (Math.PI / 180)
+                }
+            }
+        }
+        catch (e) {
+            var errorDiv = document.getElementById("errorDiv");
+            errorDiv.innerHTML = "app error -- " + e;
+        }
+
+
+    </script>
+</body>
+</html>
