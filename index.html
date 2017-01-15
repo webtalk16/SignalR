@@ -97,14 +97,6 @@
                         });
 
                         $.connection.hub.logging = true;
-                        $.connection.hub.start().done(function () {
-                            $("#hubSatus").text("SignalR connected done");
-                            var json = JSON.stringify({ "id": "9999999999", "link": "https://www.facebook.com/app_scoped_user_id/10207470834186901/", "picture": { "data": { "is_silhouette": false, "url": "images/AnonymousUser.jpg" } }, "verified": true, "locale": "en_US", "updated_time": "2015-06-06T02:03:26+0000", "first_name": "Web", "age_range": { "min": 21 }, "timezone": 3, "last_name": "User", "name": "Web User", "gender": "unspecified", "lat": "32.2448704", "long": "34.843884765" });
-                            hub.server.addSelftoUsers(json);
-                            var tempLat = String(32.2448704);
-                            var tempLong = String(34.843884765);
-                            hub.server.updateUserLocation(tempLat, tempLong);
-                        });
 
                         $.connection.hub.connectionSlow(function () {
                             $("#hubSatus").text("SignalR connection Slow...");
@@ -142,7 +134,16 @@
                                 }, 5000); // Restart connection after 5 seconds.
                             }
                         });
-
+                        
+                        $.connection.hub.start().done(function () {
+                            $("#hubSatus").text("SignalR connected done");
+                            var json = JSON.stringify({ "id": "9999999999", "link": "https://www.facebook.com/app_scoped_user_id/10207470834186901/", "picture": { "data": { "is_silhouette": false, "url": "images/AnonymousUser.jpg" } }, "verified": true, "locale": "en_US", "updated_time": "2015-06-06T02:03:26+0000", "first_name": "Web", "age_range": { "min": 21 }, "timezone": 3, "last_name": "User", "name": "Web User", "gender": "unspecified", "lat": "32.2448704", "long": "34.843884765" });
+                            hub.server.addSelftoUsers(json);
+                            var tempLat = String(32.2448704);
+                            var tempLong = String(34.843884765);
+                            hub.server.updateUserLocation(tempLat, tempLong);
+                        });
+                        
                     });
                 }
             }
