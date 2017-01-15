@@ -29,7 +29,7 @@
 
     <script src="js/libs/jquery-1.6.4.min.js"></script>
     <script src="js/libs/jquery.signalR-2.2.0.min.js"></script>
-    <script src="http://mingleradius.com/signalr/hubs"></script>
+    <script src="http://192.168.1.35/httpdocs/signalr/hubs"></script>
 
     <script src="cordova.js"></script>
 
@@ -66,7 +66,7 @@
                     console.log("$.connection - " + $.connection);
                     console.log("$.connection.hub - " + $.connection.hub);
 
-                    $.connection.hub.url = "http://mingleradius.com/signalr";
+                    $.connection.hub.url = "http://192.168.1.35/httpdocs/signalr";
 
                     hub = $.connection.mingleradiusHub
                     var ready = !!hub;
